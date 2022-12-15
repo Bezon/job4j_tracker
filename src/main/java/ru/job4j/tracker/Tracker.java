@@ -17,7 +17,8 @@ public class Tracker {
         int index = indexOf(id);
         return index != -1 ? items[index] : null;
     }
-    public Item[] findAll(){
+
+    public Item[] findAll() {
         Item[] rsl = new Item[this.size];
         int size = 0;
         for (int index = 0; index < this.size; index++) {
@@ -61,6 +62,7 @@ public class Tracker {
         }
         return rsl;
     }
+
     public boolean replace(int id, Item item) {
         int index = indexOf(id);
         boolean rsl = index != -1;
