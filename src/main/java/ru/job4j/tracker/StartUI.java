@@ -37,7 +37,7 @@ public class StartUI {
                     System.out.println("Заявка изменена успешно.");
                 } else {
                     System.out.println("Ошибка замены заявки.");
-                }3
+                }
             } else if (select == 6) {
                 run = false;
             }
