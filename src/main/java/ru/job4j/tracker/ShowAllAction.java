@@ -21,7 +21,7 @@ public class ShowAllAction implements UserAction {
                 out.println(item);
             }
         } else {
-            out.println("Хранилище еще не содержит заявок");
+            out.println("Tracker does not yet contain requests");
         }
         return true;
     }
