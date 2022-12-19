@@ -3,7 +3,7 @@ package ru.job4j.ex;
 public class FindEl {
     public static int indexOf(String[] value, String key) throws ElementNotFoundException {
         if (key == null) {
-            throw new ElementNotFoundException("Элемент не найден");
+            throw new ElementNotFoundException();
         }
 
         int rsl = -1;
