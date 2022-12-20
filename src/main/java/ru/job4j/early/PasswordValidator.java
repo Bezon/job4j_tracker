@@ -14,10 +14,10 @@ public class PasswordValidator {
         if (password.equals(password.toUpperCase())) {
             throw new IllegalArgumentException("Password should contain at least one lowercase letter");
         }
-        if (checkChr(password, "isDigital")) {
+        if (isNotDigital(password)) {
             throw new IllegalArgumentException("Password should contain at least one figure");
         }
-        if (checkChr(password, "isSpec")) {
+        if (isNotSimbol(password)) {
             throw new IllegalArgumentException("Password should contain at least one special symbol");
         }
         if (checkDictionary(password)) {
@@ -27,25 +27,25 @@ public class PasswordValidator {
         return password;
     }
 
-    private static boolean checkChr(String password, String type) {
+    private static boolean isNotDigital(String password) {
         Character ch;
         boolean rsl = true;
         for (int i = 0; i < password.length(); i++) {
             ch = password.charAt(i);
-            switch (type) {
-                case "isDigital":
-                    if (Character.isDigit(ch)) {
-                        rsl = false;
-                    }
-                    break;
-                case "isSpec":
-                    if ((ch >= 32 && ch <= 47) || (ch >= 58 && ch <= 64)
-                            || (ch >= 91 && ch <= 96) || (ch >= 123 && ch <= 126)) {
-                        rsl = false;
-                    }
-                    break;
-                default:
-                    rsl = false;
+            if (Character.isDigit(ch)) {
+                rsl = false;
+            }
+        }
+        return rsl;
+    }
+
+    private static boolean isNotSimbol(String password) {
+        Character ch;
+        boolean rsl = true;
+        for (int i = 0; i < password.length(); i++) {
+            ch = password.charAt(i);
+            if (!Character.isLetter(ch) && !Character.isDigit(ch)) {
+                rsl = false;
             }
         }
         return rsl;
@@ -54,7 +54,7 @@ public class PasswordValidator {
     private static boolean checkDictionary(String password) {
         String[] dictionary = new String[]{"qwerty", "12345", "password", "admin", "user"};
         for (String word: dictionary) {
-            if (String.valueOf(password).toLowerCase().contains(word)) {
+            if (password.toLowerCase().contains(word)) {
                 return true;
             }
         }
