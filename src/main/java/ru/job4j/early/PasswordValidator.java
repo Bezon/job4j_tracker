@@ -8,11 +8,11 @@ public class PasswordValidator {
         if (password.length() < 8 || password.length() > 32) {
             throw new IllegalArgumentException("Password should be length [8, 32]");
         }
-        if (!password.equals(password.toLowerCase())) {
-            throw new IllegalArgumentException("Password should contain at least one lowercase letter");
-        }
-        if (!password.equals(password.toUpperCase())) {
+        if (password.equals(password.toLowerCase())) {
             throw new IllegalArgumentException("Password should contain at least one uppercase letter");
+        }
+        if (password.equals(password.toUpperCase())) {
+            throw new IllegalArgumentException("Password should contain at least one lowercase letter");
         }
         if (checkChr(password, "isDigital")) {
             throw new IllegalArgumentException("Password should contain at least one figure");
@@ -24,20 +24,26 @@ public class PasswordValidator {
             throw new IllegalArgumentException("Password shouldn't contain substrings: qwerty, 12345"
                     + ", password, admin, user");
         }
-        return "Passport is valid";
+        return password;
     }
 
     private static boolean checkChr(String password, String type) {
         Character ch;
         boolean rsl = true;
-        for (int i = 1; i < password.length(); i++) {
+        for (int i = 0; i < password.length(); i++) {
             ch = password.charAt(i);
             switch (type) {
-                case "isDigit":
-                    rsl = Character.isDigit(ch);
+                case "isDigital":
+                    if (Character.isDigit(ch)) {
+                        rsl = false;
+                    }
+                    break;
                 case "isSpec":
-                    rsl = ((ch >= 32 && ch <= 47) || (ch >= 58 && ch <= 64)
-                            || (ch >= 91 && ch <= 96) || (ch >= 123 && ch <= 126));
+                    if ((ch >= 32 && ch <= 47) || (ch >= 58 && ch <= 64)
+                            || (ch >= 91 && ch <= 96) || (ch >= 123 && ch <= 126)) {
+                        rsl = false;
+                    }
+                    break;
                 default:
                     rsl = false;
             }
@@ -48,7 +54,7 @@ public class PasswordValidator {
     private static boolean checkDictionary(String password) {
         String[] dictionary = new String[]{"qwerty", "12345", "password", "admin", "user"};
         for (String word: dictionary) {
-            if (word.equals(String.valueOf(password).toLowerCase())) {
+            if (String.valueOf(password).toLowerCase().contains(word)) {
                 return true;
             }
         }
