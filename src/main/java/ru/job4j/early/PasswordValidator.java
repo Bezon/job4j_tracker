@@ -17,7 +17,7 @@ public class PasswordValidator {
         if (isNotDigital(password)) {
             throw new IllegalArgumentException("Password should contain at least one figure");
         }
-        if (isNotSimbol(password)) {
+        if (isNotSymbol(password)) {
             throw new IllegalArgumentException("Password should contain at least one special symbol");
         }
         if (checkDictionary(password)) {
@@ -34,18 +34,20 @@ public class PasswordValidator {
             ch = password.charAt(i);
             if (Character.isDigit(ch)) {
                 rsl = false;
+                break;
             }
         }
         return rsl;
     }
 
-    private static boolean isNotSimbol(String password) {
+    private static boolean isNotSymbol(String password) {
         Character ch;
         boolean rsl = true;
         for (int i = 0; i < password.length(); i++) {
             ch = password.charAt(i);
             if (!Character.isLetter(ch) && !Character.isDigit(ch)) {
                 rsl = false;
+                break;
             }
         }
         return rsl;
