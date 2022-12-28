@@ -31,7 +31,7 @@ public class SingleTracker {
         return tracker.findAll();
     }
 
-    public Item[] findByName(String name) {
+    public List<Item> findByName(String name) {
         return tracker.findByName(name);
     }
 
