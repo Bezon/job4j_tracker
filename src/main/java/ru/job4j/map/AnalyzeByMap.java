@@ -35,9 +35,7 @@ public class AnalyzeByMap {
         int count = 0;
         for (Pupil pupil : pupils) {
             for (Subject subject : pupil.subjects()) {
-                int amount = map.get(subject.name()) != null ? map.get(subject.name())
-                        + subject.score() : subject.score();
-                map.put(subject.name(), amount);
+                map.put(subject.name(), map.getOrDefault(subject.name(), 0) + subject.score());
             }
             count++;
         }
