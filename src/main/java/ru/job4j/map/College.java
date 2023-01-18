@@ -1,6 +1,8 @@
 package ru.job4j.map;
 
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 public class College {
@@ -10,24 +12,25 @@ public class College {
         this.students = students;
     }
 
-    public Student findByAccount(String account) {
-        return students.keySet()
+    public Optional<Student> findByAccount(String account) {
+        Optional<Student> student = Optional.empty();
+                student = students.keySet()
                 .stream()
                 .filter(s -> s.account().equals(account))
-                .findFirst()
-                .orElse(null);
+                .findFirst();
+        return student;
     }
 
-    public Subject findBySubjectName(String account, String name) {
-        Student a = findByAccount(account);
-        if (a != null) {
-            return students.get(a)
+    public Optional<Subject> findBySubjectName(String account, String name) {
+        Optional<Student> a = findByAccount(account);
+        Optional<Subject> subject = Optional.empty();
+        if (!a.equals(Optional.empty())) {
+            subject = students.get(a.get())
                     .stream()
                     .filter(s -> s.name().equals(name))
-                    .findFirst()
-                    .orElse(null);
+                    .findFirst();
         }
-        return null;
+        return subject;
     }
 
     public static void main(String[] args) {
@@ -38,9 +41,9 @@ public class College {
                 )
         );
         College college = new College(students);
-        Student student = college.findByAccount("000001");
+        Optional<Student> student = college.findByAccount("000001");
         System.out.println("Найденный студент: " + student);
-        Subject english = college.findBySubjectName("000001", "English");
-        System.out.println("Оценка по найденному предмету: " + english.score());
+        Optional<Subject> english = college.findBySubjectName("000001", "English");
+        System.out.println("Оценка по найденному предмету: " + english.get().score());
     }
 }
